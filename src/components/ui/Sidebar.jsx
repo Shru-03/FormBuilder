@@ -61,7 +61,7 @@ function Sidebar({ onCreateClick, navigate }) {
         title="Create Template"
       >
         <SquarePlus size={25} />
-        {isOpen && <span>Create </span>}
+        {isOpen && <span>New Template </span>}
       </button>
     </aside>
   );

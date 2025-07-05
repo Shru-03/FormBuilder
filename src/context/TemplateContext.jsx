@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const TemplateContext = createContext();
 
@@ -59,6 +60,7 @@ export function TemplateProvider({ children }) {
   const deleteTemplate = (id) => {
     const filtered = templates.filter((t) => t.id !== id);
     setTemplates(filtered);
+    toast.success("Template deleted!");
   };
 
   useEffect(() => {

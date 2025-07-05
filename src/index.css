@@ -3,3 +3,9 @@
 button {
   cursor: pointer;
 }
+* {
+  font-family: "Poppins", sans-serif;
+}
+.logo {
+  font-family: "Playfair Display", serif !important;
+}

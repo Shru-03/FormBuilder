@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useTemplateContext } from "../context/TemplateContext";
 import { Plus, Edit, Trash2, EyeIcon } from "lucide-react";
+import ConfirmDeleteModal from "../components/ui/ConfirmDeleteModal";
 
 function SavedTemplates({ onCreateClick, navigate }) {
   const {
@@ -9,6 +11,8 @@ function SavedTemplates({ onCreateClick, navigate }) {
     setSelectedTemplateId,
     deleteTemplate,
   } = useTemplateContext();
+  const [showModal, setShowModal] = useState(false);
+  const [toDeleteTemplate, setToDeleteTemplate] = useState(null);
 
   return (
     <section className="w-full p-2 md:p-6">
@@ -78,7 +82,8 @@ function SavedTemplates({ onCreateClick, navigate }) {
                   {selectedTemplateId === template.id && (
                     <Trash2
                       onClick={() => {
-                        deleteTemplate(template.id);
+                        setToDeleteTemplate(template);
+                        setShowModal(true);
                       }}
                       size={16}
                       className="text-red-500"
@@ -94,6 +99,16 @@ function SavedTemplates({ onCreateClick, navigate }) {
           ))}
         </div>
       )}
+      <ConfirmDeleteModal
+        isOpen={showModal}
+        templateName={toDeleteTemplate?.name}
+        onClose={() => setShowModal(false)}
+        onConfirm={() => {
+          if (toDeleteTemplate) {
+            deleteTemplate(toDeleteTemplate.id);
+          }
+        }}
+      />
     </section>
   );
 }
