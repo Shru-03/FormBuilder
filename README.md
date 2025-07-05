@@ -62,7 +62,7 @@ This project uses Context API for global state instead of Redux/Zustand to keep 
 
 src/
 │
-├── assets/ # Images, SVGs, or static files
+├── assets/ 
 │
 ├── components/
 │ ├── builder/ # Core builder UI
@@ -81,17 +81,17 @@ src/
 │ └── Toolbox.jsx
 │
 ├── context/
-│ └── TemplateContext.jsx # Global state management using Context API
+│ └── TemplateContext.jsx 
 │
-├── pages/ # Route-level pages
+├── pages/ 
 │ ├── MainSection.jsx
 │ ├── PreviewPage.jsx
 │ └── SavedTemplates.jsx
 │
-├── App.jsx # App shell
-├── App.css # Global styles
-├── index.css # Tailwind config
-└── main.jsx # ReactDOM entry point
+├── App.jsx 
+├── App.css 
+├── index.css 
+└── main.jsx 
 
 ## Instructions to run the project
 
