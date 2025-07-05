@@ -6,7 +6,7 @@ A dynamic form template builder that allows users to design customizable templat
 
 ## 🌐 Live Demo
 
-👉 [Try it here](https://form-builder.netlify.app)
+👉 [Try it here](https://form-template-builder.netlify.app)
 
 ## 🚀 Features
 
