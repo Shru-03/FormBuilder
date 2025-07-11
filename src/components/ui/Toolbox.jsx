@@ -17,7 +17,7 @@ import {
   Search,
   FileText,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const boxClass =
   "flex flex-col w-[180px] h-[130px] justify-center items-center mb-4 gap-3 p-3 px-6 bg-[#F6F6F6] rounded-md shadow-sm cursor-grab transition-transform transform hover:bg-gray-200 hover:shadow-md hover:scale-105 text-[17px] font-medium";
@@ -44,6 +44,7 @@ export default function Toolbox() {
   const [searchInput, setSearchInput] = useState("");
 
   const [isOpen, setIsOpen] = useState(false);
+  const [tempInput, setTempInput] = useState("");
 
   const filteredTextElements = fields.textElements.filter((f) =>
     f.label.toLowerCase().includes(searchInput.toLowerCase())
@@ -51,6 +52,13 @@ export default function Toolbox() {
   const filteredMultiChoiceElements = fields.multiChoiceElements.filter((f) =>
     f.label.toLowerCase().includes(searchInput.toLowerCase())
   );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchInput(tempInput);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [tempInput]);
 
   const handleDrag = (item) => (e) => {
     e.dataTransfer.setData("application/json", JSON.stringify(item));
@@ -86,8 +94,8 @@ export default function Toolbox() {
         <div className="flex items-center ">
           <input
             type="text"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
+            value={tempInput}
+            onChange={(e) => setTempInput(e.target.value)}
             className=" relative border border-gray-200 w-full rounded p-2 px-8 text-[16px]"
             placeholder="Search Elements"
           />
