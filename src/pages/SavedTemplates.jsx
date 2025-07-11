@@ -15,7 +15,7 @@ function SavedTemplates({ onCreateClick, navigate }) {
   const [toDeleteTemplate, setToDeleteTemplate] = useState(null);
 
   return (
-    <section className="w-full p-2 md:p-6">
+    <section className="ml-18 w-full p-2 md:p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-4">
         <h2 className="text-md md:text-xl font-bold text-gray-800">
           Saved Templates

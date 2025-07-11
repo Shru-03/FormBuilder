@@ -1,12 +1,14 @@
-import { EyeIcon, Save } from "lucide-react";
+import { ArrowBigLeftIcon, ArrowLeft, EyeIcon, Save } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 import { useTemplateContext } from "../../context/TemplateContext";
 
 const Navbar = ({ navigate, onPreview }) => {
-  const { templates, selectedTemplateId } = useTemplateContext();
+  const { templates, selectedTemplateId, selectedTemplate } =
+    useTemplateContext();
 
   const location = useLocation();
+  const isFormSubmissions = location.pathname === "/form-submissions";
   const isSavedTemplatesPage = location.pathname === "/saved-templates";
 
   const handleSaveDraft = () => {
@@ -27,17 +29,25 @@ const Navbar = ({ navigate, onPreview }) => {
   };
 
   return (
-    <header className="w-full px-1 sm:px-6 py-3 flex justify-between items-center shadow-md bg-white sticky top-0 z-50">
-      <h1 className="text-l sm:text-xl font-bold text-gray-800 flex items-center">
-        <span
-          onClick={() => navigate("/")}
-          className="logo ml-2 font-serif tracking-wide  cursor-pointer"
+    <section className="w-full px-1 sm:px-6 py-3 flex justify-between items-center bg-white top-0 ">
+      <div className="flex justify-center ml-14 items-center gap-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 bg-white shadow-md border border-gray-200 rounded"
         >
-          FormBuilder
-        </span>
-      </h1>
+          <ArrowLeft size={16} />
+        </button>
+        <span className="text-[16px]">Back</span>
+      </div>
+      {selectedTemplate ? (
+        <h2 className="text-l font-semibold text-gray-800">
+          {selectedTemplate.name}
+        </h2>
+      ) : (
+        ""
+      )}
 
-      {!isSavedTemplatesPage && (
+      {!isSavedTemplatesPage && !isFormSubmissions && (
         <div className="flex gap-4">
           <button
             onClick={handleSaveDraft}
@@ -55,7 +65,7 @@ const Navbar = ({ navigate, onPreview }) => {
           </button>
         </div>
       )}
-    </header>
+    </section>
   );
 };
 

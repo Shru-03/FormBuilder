@@ -19,7 +19,7 @@ function Builder({ onCreateClick }) {
 
   if (!selectedTemplate) {
     return (
-      <main className="flex-1 p-6">
+      <main className="ml-18 flex-1 p-6">
         <p className="text-gray-500 italic">
           Select a template to start building.
         </p>
@@ -35,18 +35,14 @@ function Builder({ onCreateClick }) {
   }
 
   return (
-    <main className="flex-1 p-2 md:p-6 overflow-y-auto bg-[#fdfdf9]">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">
-        {selectedTemplate.name}
-      </h2>
-
+    <main className="flex-1  overflow-y-auto no-scrollbar ">
       {selectedTemplate.sections.map((section) => (
         <SectionEditor key={section.id} section={section} />
       ))}
 
       <button
         onClick={handleAddSection}
-        className="flex items-center gap-2 px-4 py-2 text-[16px] bg-black text-white rounded hover:bg-gray-700 cursor-pointer"
+        className="flex mx-auto mt-4 items-center gap-2 px-4 py-2 text-[16px] bg-black text-white rounded hover:bg-gray-700 cursor-pointer"
       >
         <Plus size={18} /> Add Section
       </button>

@@ -7,6 +7,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<MainSection />} />
+        <Route path="/form-submissions" element={<MainSection />} />
         <Route path="/saved-templates" element={<MainSection />} />
         <Route path="/preview" element={<PreviewPage />} />
       </Routes>

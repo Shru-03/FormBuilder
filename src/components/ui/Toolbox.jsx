@@ -14,16 +14,43 @@ import {
   Radio,
   Menu,
   X,
+  Search,
+  FileText,
 } from "lucide-react";
 import { useState } from "react";
 
 const boxClass =
-  "flex items-center mb-4 gap-3 p-3 px-6 bg-gray-50 rounded shadow-sm cursor-grab transition-transform transform hover:bg-gray-100 hover:shadow-md hover:scale-105 text-sm font-medium";
-const groupTitleClass = "text-xs font-semibold text-gray-500 mb-2 uppercase";
+  "flex flex-col w-[180px] h-[130px] justify-center items-center mb-4 gap-3 p-3 px-6 bg-[#F6F6F6] rounded-md shadow-sm cursor-grab transition-transform transform hover:bg-gray-200 hover:shadow-md hover:scale-105 text-[17px] font-medium";
 
+const subboxClass =
+  " mb-4 p-3 px-6 bg-gray-50 rounded-md shadow-sm cursor-grab transition-transform transform hover:bg-gray-200 hover:shadow-md hover:scale-105 text-[17px] font-medium";
+const groupTitleClass = "text-xs font-semibold text-gray-500 mb-4 uppercase";
+
+const fields = {
+  textElements: [
+    { label: "Short Answer", icon: <Type size={18} /> },
+    { label: "Paragraph", icon: <FileText size={18} /> },
+    { label: "Headings", icon: <ChevronDown size={18} /> },
+    { label: "Number", icon: <Hash size={18} /> },
+  ],
+  multiChoiceElements: [
+    { label: "Dropdown", icon: <List size={18} /> },
+    { label: "Radio", icon: <Radio size={18} /> },
+    { label: "Yes/No", icon: <ToggleLeft size={18} /> },
+  ],
+};
 export default function Toolbox() {
   const [showHeadings, setShowHeadings] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const filteredTextElements = fields.textElements.filter((f) =>
+    f.label.toLowerCase().includes(searchInput.toLowerCase())
+  );
+  const filteredMultiChoiceElements = fields.multiChoiceElements.filter((f) =>
+    f.label.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   const handleDrag = (item) => (e) => {
     e.dataTransfer.setData("application/json", JSON.stringify(item));
@@ -41,81 +68,95 @@ export default function Toolbox() {
 
       {/* Toolbox  */}
       <aside
-        className={`fixed md:relative top-0 right-0 h-full bg-white shadow-[0_1px_4px_rgba(0,0,0,0.16)] rounded space-y-6 p-4 px-8 z-10 transition-transform duration-300 ease-in-out ${
+        className={`fixed m-4 overflow-auto no-scrollbar md:relative top-0 right-0 h-full bg-white shadow-[0_1px_4px_rgba(0,0,0,0.16)] rounded-md space-y-6 p-4 px-8 z-10 transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } md:translate-x-0 w-[auto]`}
       >
-        <div>
+        <section className="flex justify-between gap-3">
+          <button className="bg-white w-full shadow-sm py-1 px-3 text-[14px] font-semibold rounded">
+            Fields
+          </button>
+          <button className="bg-white w-full  py-1 px-3 text-[14px] font-semibold rounded">
+            Workflow
+          </button>
+          <button className="bg-white w-full  py-1 px-3 text-[14px] font-semibold rounded">
+            Permissions
+          </button>
+        </section>
+        <div className="flex items-center ">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className=" relative border border-gray-200 w-full rounded p-2 px-8 text-[16px]"
+            placeholder="Search Elements"
+          />
+          <Search className="absolute left-10 text-gray-400" />
+        </div>
+        {filteredTextElements.length > 0 ? (
           <h3 className={groupTitleClass}>Text Elements</h3>
-
-          <div
-            className={boxClass}
-            draggable
-            onDragStart={handleDrag({
-              type: "short_answer",
-              label: "Short Answer",
-            })}
-          >
-            <Text size={18} />
-            Short Answer
-          </div>
-
-          <div
-            className={boxClass}
-            draggable
-            onDragStart={handleDrag({ type: "paragraph", label: "Paragraph" })}
-          >
-            <AlignLeft size={18} />
-            Paragraph
-          </div>
+        ) : (
+          ""
+        )}
+        <div className="grid grid-cols-2 gap-4">
+          {filteredTextElements.map((t, index) =>
+            t.label !== "Headings" ? (
+              <div
+                className={boxClass}
+                key={index}
+                draggable
+                onDragStart={handleDrag({
+                  type: t.label,
+                })}
+              >
+                {t.icon}
+                {t.label}
+              </div>
+            ) : (
+              <div
+                key={index}
+                className={`${boxClass} justify-between`}
+                onClick={() => setShowHeadings(!showHeadings)}
+              >
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform ${
+                    showHeadings ? "rotate-180" : ""
+                  }`}
+                />
+                <div className="flex items-center gap-2">Headings</div>
+              </div>
+            )
+          )}
 
           <div className="mt-3">
-            <div
-              className={`${boxClass} justify-between`}
-              onClick={() => setShowHeadings(!showHeadings)}
-            >
-              <div className="flex items-center gap-2">
-                <Type size={18} />
-                Headings
-              </div>
-              <ChevronDown
-                size={16}
-                className={`transition-transform ${
-                  showHeadings ? "rotate-180" : ""
-                }`}
-              />
-            </div>
-
             {showHeadings && (
               <div className="pl-6 mt-2 space-y-2">
                 <div
-                  className={boxClass}
+                  className={subboxClass}
                   draggable
                   onDragStart={handleDrag({
                     type: "heading1",
-                    label: "Heading 1",
                   })}
                 >
                   <Heading1 size={16} />
                   Heading 1
                 </div>
                 <div
-                  className={boxClass}
+                  className={subboxClass}
                   draggable
                   onDragStart={handleDrag({
                     type: "heading2",
-                    label: "Heading 2",
                   })}
                 >
                   <Heading2 size={16} />
                   Heading 2
                 </div>
                 <div
-                  className={boxClass}
+                  className={subboxClass}
                   draggable
                   onDragStart={handleDrag({
                     type: "heading3",
-                    label: "Heading 3",
                   })}
                 >
                   <Heading3 size={16} />
@@ -125,45 +166,24 @@ export default function Toolbox() {
             )}
           </div>
         </div>
-
-        <div>
+        {filteredMultiChoiceElements.length > 0 ? (
           <h3 className={groupTitleClass}>Multiple Choice</h3>
+        ) : (
+          ""
+        )}
 
-          <div
-            className={boxClass}
-            draggable
-            onDragStart={handleDrag({ type: "dropdown", label: "Dropdown" })}
-          >
-            <List size={18} />
-            Dropdown
-          </div>
-
-          <div
-            className={boxClass}
-            draggable
-            onDragStart={handleDrag({ type: "radio", label: "Radio" })}
-          >
-            <Radio size={18} />
-            Radio
-          </div>
-
-          <div
-            className={boxClass}
-            draggable
-            onDragStart={handleDrag({ type: "yes_no", label: "Yes / No" })}
-          >
-            <ToggleLeft size={18} />
-            Yes / No
-          </div>
-
-          <div
-            className={boxClass}
-            draggable
-            onDragStart={handleDrag({ type: "number", label: "Number Input" })}
-          >
-            <Hash size={18} />
-            Number Input
-          </div>
+        <div className="grid grid-cols-2 gap-4">
+          {filteredMultiChoiceElements.map((t, index) => (
+            <div
+              key={index}
+              className={boxClass}
+              draggable
+              onDragStart={handleDrag({ type: t.label })}
+            >
+              {t.icon}
+              {t.label}
+            </div>
+          ))}
         </div>
       </aside>
     </>

@@ -6,27 +6,35 @@ import Navbar from "../components/ui/Navbar";
 import Sidebar from "../components/ui/Sidebar";
 import { useLocation, useNavigate } from "react-router-dom";
 import SavedTemplates from "./SavedTemplates";
+import FormSubmissions from "./FormSubmissions";
 
 const MainSection = () => {
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const isSavedTemplates = location.pathname.includes("saved-templates");
+  const isFormSubmissions = location.pathname.includes("form-submissions");
   const navigate = useNavigate();
 
   return (
     <div>
-      <Navbar navigate={navigate} />
       <div className="flex h-screen">
         <Sidebar navigate={navigate} onCreateClick={() => setShowModal(true)} />
-        {isSavedTemplates ? (
-          <SavedTemplates
-            navigate={navigate}
-            onCreateClick={() => setShowModal(true)}
-          />
-        ) : (
-          <Builder onCreateClick={() => setShowModal(true)} />
-        )}
-        {isSavedTemplates ? "" : <Toolbox />}
+        <div className="w-full">
+          <Navbar navigate={navigate} />
+          <div className="flex h-screen bg-[#fafafa]">
+            {isSavedTemplates ? (
+              <SavedTemplates
+                navigate={navigate}
+                onCreateClick={() => setShowModal(true)}
+              />
+            ) : isFormSubmissions ? (
+              <FormSubmissions />
+            ) : (
+              <Builder onCreateClick={() => setShowModal(true)} />
+            )}
+            {isSavedTemplates ? "" : isFormSubmissions ? "" : <Toolbox />}
+          </div>
+        </div>
 
         <CreateTemplateModal
           isOpen={showModal}

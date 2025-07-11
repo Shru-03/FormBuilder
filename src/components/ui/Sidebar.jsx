@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useTemplateContext } from "../../context/TemplateContext";
-
-import { X, Menu, Folder, SquarePlus } from "lucide-react";
+import { X, Menu, Folder, SquarePlus, Inbox } from "lucide-react";
 import toast from "react-hot-toast";
 
 function Sidebar({ onCreateClick, navigate }) {
@@ -14,7 +13,7 @@ function Sidebar({ onCreateClick, navigate }) {
 
   return (
     <aside
-      className={`transition-all duration-300 h-full bg-gradient-to-br from-neutral-900 via-gray-900 to-black text-white shadow-[0_1px_4px_rgba(0,0,0,0.16)] p-4 ${
+      className={`fixed top-0 z-50 left-0 bottom-0 transition-all duration-300 h-full bg-gradient-to-br from-neutral-900 via-gray-900 to-black text-white shadow-[0_1px_4px_rgba(0,0,0,0.16)] p-4 ${
         isOpen ? "w-1/6 min-w-[300px]" : "w-16"
       }`}
     >
@@ -41,6 +40,22 @@ function Sidebar({ onCreateClick, navigate }) {
       >
         <Folder size={25} />
         {isOpen && <span>My Templates </span>}
+      </button>
+
+      <button
+        onClick={() => {
+          if (!isOpen) {
+            setIsOpen(true);
+          }
+          navigate("/form-submissions");
+        }}
+        className={`flex items-center mb-4 text-white hover:text-gray-300 rounded   transition-all duration-200 cursor-pointer ${
+          isOpen ? "gap-2 px-2 py-2" : "w-8 h-8 mx-auto justify-center p-0"
+        }`}
+        title="Form Submissions"
+      >
+        <Inbox size={25} />
+        {isOpen && <span>Form Submissions </span>}
       </button>
 
       <button
