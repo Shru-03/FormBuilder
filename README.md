@@ -9,6 +9,7 @@ A dynamic form template builder that allows users to design customizable templat
 👉 [Try it here](https://form-template-builder.netlify.app)
 
 ## 🌐 Demo Video
+
 [Watch Demo Video](https://drive.google.com/file/d/1alVEar_RdpLamkuFUBsKDG9jVpVniYDp/view?usp=sharing)
 
 ## 🚀 Features
@@ -18,25 +19,36 @@ A dynamic form template builder that allows users to design customizable templat
 ### 🧱 Builder
 
 - Create and manage **up to 5 templates**
+ 
 - Add **multiple sections** with custom titles
+ 
 - Drag-and-drop fields **within a section**
+
 - Field types supported:
   - 🔠 **Label** (H1, H2, H3)
   - ✍️ **Text**
   - 🔢 **Number**
   - ✅ **Boolean** (Checkbox/Toggle)
   - 🔽 **Enum** (Dropdown)
+    
 - Real-time preview panel
+ 
 - Basic data type validation
+ 
 - LocalStorage-based template saving
+ 
 - Delete individual fields
+ 
 - Rearrangement via drag-and-drop
 
 ### 🧾 Form
 
 - Render forms from saved templates
+ 
 - Dynamic field rendering
+ 
 - Validate input based on field type
+ 
 - Save form responses to **localStorage**
 
 ---
@@ -99,8 +111,11 @@ src/
 ## Instructions to run the project
 
 git clone https://github.com/Shru-03/FormBuilder.git
+
 cd form-template-builder
+
 npm install
+
 npm run dev
 
 ## 🪪 License
